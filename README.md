@@ -36,7 +36,7 @@ ld
 - [Sui](https://github.com/sui-foundation/awesome-sui)
 - [Base](https://github.com/wbnns/awesome-base)
 - [Aptos](https://github.com/BlockEdenHQ/awesome-aptos)
-- [Optimism](https://github.com/lucas-op/awesome-optimism)thu
+- [Optimism](https://github.com/lucas-op/awesome-optimism)
 - [Cosmos](https://github.com/cosmos/awesome-cosmos)
 - [Polkadot](https://github.com/haquefardeen/awesome-dot)
 - [StarkNet](https://github.com/keep-starknet-strange/awesome-starknet)
