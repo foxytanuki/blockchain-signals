@@ -13,6 +13,20 @@ A curated list of blockchain-related RSS feeds and newsletters delivering the la
 
 - [Aptos](https://aptosfoundation.org/subscribe) - A scalable and secure blockchain designed for the next generation of decentralized applications. Aptos features a unique parallel execution engine, high throughput, and low latency, making it ideal for complex and high-demand use cases.
 
+- [Arbitrum](https://arbitrum.io/) - Ethereum Layer 2 scaling solution, offering fast and low-cost transactions with high compatibility for smart contracts.
+  
+- [Optimism](https://optimism.us6.list-manage.com/subscribe/post?u=9727fa8bec4011400e57cafcb&id=ca91042234&f_id=002a19e3f0) - A scalable and secure Ethereum Layer 2 solution that leverages optimistic rollups to reduce transaction fees and improve throughput.
+
+- [Polygon](https://polygon.technology/) - Ethereum's leading scaling platform providing low-cost, high-speed transactions and a growing ecosystem for decentralized applications.
+
+- [Cosmos](https://v1.cosmos.network/) - An ecosystem of connected blockchains designed for scalability and interoperability using the Tendermint consensus protocol.
+ld
+
+- [Polkadot](https://polkadot.com/community/newsroom) - A multichain network that facilitates cross-chain communication and enables diverse blockchain ecosystems to operate in harmony.
+  
+- [StarkNet](https://www.starknet.io/starknet-devs-newsletter/) - A Layer 2 solution on Ethereum utilizing ZK-Rollups for enhanced scalability and privacy while maintaining the security of Ethereum.
+
+
 ## Awesome Lists
 
 - [Web3](https://awesome-web3.comwe)
@@ -22,6 +36,10 @@ A curated list of blockchain-related RSS feeds and newsletters delivering the la
 - [Sui](https://github.com/sui-foundation/awesome-sui)
 - [Base](https://github.com/wbnns/awesome-base)
 - [Aptos](https://github.com/BlockEdenHQ/awesome-aptos)
+- [Optimism](https://github.com/lucas-op/awesome-optimism)thu
+- [Cosmos](https://github.com/cosmos/awesome-cosmos)
+- [Polkadot](https://github.com/haquefardeen/awesome-dot)
+- [StarkNet](https://github.com/keep-starknet-strange/awesome-starknet)
 
 ## Categories
 
