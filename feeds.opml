@@ -25,7 +25,6 @@
       <outline text="Filecoin - Filecoin Blog" title="Filecoin - Filecoin Blog" type="rss" xmlUrl="https://filecoin.io/blog/feed/index.xml" htmlUrl="https://filecoin.io/blog/feed/index.xml"/>
       <outline text="FIO Blog - Medium" title="FIO Blog - Medium" type="rss" xmlUrl="https://medium.com/feed/fio-blog" htmlUrl="https://medium.com/fio-blog?source=rss----512dde304f1a---4"/>
       <outline text="Flexa - Medium" title="Flexa - Medium" type="rss" xmlUrl="https://medium.com/feed/flexa" htmlUrl="https://medium.com/flexa?source=rss----1c78872c0f5a---4"/>
-      <outline text="Forta Network - Forta" title="Forta Network - Forta" type="rss" xmlUrl="https://forta.org/blog/feed" htmlUrl="https://forta.org/"/>
       <outline text="Ghost - Ghost" title="Ghost - Ghost" type="rss" xmlUrl="https://ghost.org/changelog/rss/" htmlUrl="https://ghost.org/changelog/"/>
       <outline text="Gnosis Safe - Mirror" title="Gnosis Safe - Mirror" type="rss" xmlUrl="https://safe.mirror.xyz/feed/atom" htmlUrl="https://safe.mirror.xyz/"/>
       <outline text="Golem - Golem Network" title="Golem - Golem Network" type="rss" xmlUrl="https://blog.golemproject.net/feed" htmlUrl="https://blog.golemproject.net/?source=rss----cdb21c6c853---4"/>
