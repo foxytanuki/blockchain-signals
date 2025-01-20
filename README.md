@@ -42,6 +42,28 @@ ld
 - [Polkadot](https://github.com/haquefardeen/awesome-dot)
 - [StarkNet](https://github.com/keep-starknet-strange/awesome-starknet)
 
+---
+
+## Planned Features
+
+### List of Project Communication Channels
+- Official Discord and Telegram channels for each blockchain project
+- Direct links to project communities
+- Status indicators for channel activity
+
+### Feed Status Monitoring
+- Automated checking of feed availability and activity
+- Status indicators (Active/Inactive) for each resource
+- Regular updates via GitHub Actions
+- Historical activity tracking and statistics
+
+### Content Rating System
+- Upvote/Downvote functionality for feeds and newsletters
+- Community-driven quality assessment
+- Sorting options based on popularity and relevance
+
+---
+
 ## Categories
 
 ### 1. **Protocols**
