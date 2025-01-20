@@ -26,6 +26,7 @@ ld
   
 - [StarkNet](https://www.starknet.io/starknet-devs-newsletter/) - A Layer 2 solution on Ethereum utilizing ZK-Rollups for enhanced scalability and privacy while maintaining the security of Ethereum.
 
+- [NymVPN](https://nymtech.us19.list-manage.com/subscribe?u=8ec8f34b310293492a02a12c0&id=1c58c918aa) - A privacy infrastructure offering mixnet technology for enhanced network-level privacy. Features decentralized routing, end-to-end encryption, and protection against metadata surveillance.
 
 ## Awesome Lists
 
