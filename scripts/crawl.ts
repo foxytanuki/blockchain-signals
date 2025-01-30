@@ -1,6 +1,7 @@
 import FireCrawlApp from "@mendable/firecrawl-js";
 import { z } from "zod";
 import dotenv from "dotenv";
+import ora from "ora";
 
 dotenv.config();
 
@@ -25,38 +26,49 @@ const schema = z.object({
   }),
 });
 
+const URLS = ["https://solana.com"];
+const PROMPT =
+  "Extract information about projects including their name, official website, RSS feed URL, newsletter URL, Twitter handle, Discord invite link, Telegram link, GitHub repository, Grants, Docs, Youtube link, Reddit link, other links, and any additional notes.";
+
 async function main() {
-  const extractResult = await app.extract(["https://solana.com"], {
-    prompt:
-      "Extract information about projects including their name, official website, RSS feed URL, newsletter URL, Twitter handle, Discord invite link, Telegram link, GitHub repository, Grants, Docs, Youtube link, Reddit link, other links, and any additional notes.",
-    schema,
-    enableWebSearch: true,
+  let timer: NodeJS.Timeout;
+
+  // Add signal handlers for cleanup
+  process.on("SIGINT", () => {
+    clearInterval(timer);
+    spinner.stop();
+    console.log("\nCrawler stopped by user");
+    process.exit(0);
   });
 
-  // {
-  //   success: true,
-  //   data: {
-  //     project: {
-  //       docs: 'https://solana.com/docs',
-  //       name: 'Solana',
-  //       notes: 'Solana is a high-performance blockchain supporting decentralized applications and crypto projects.',
-  //       github: 'https://github.com/solana-labs/solana',
-  //       grants: 'https://solana.org/grants',
-  //       reddit: 'https://www.reddit.com/r/solana',
-  //       twitter: 'https://twitter.com/solana',
-  //       youtube: 'https://www.youtube.com/SolanaFndn',
-  //       telegram: 'https://t.me/solana',
-  //       other_links: [],
-  //       rss_feed_url: '/news/rss',
-  //       newsletter_url: 'https://solana.com/newsletter',
-  //       official_website: 'https://solana.com/',
-  //       discord_invite_link: 'https://discord.com/invite/kBbATFA7PW'
-  //     }
-  //   },
-  //   warning: undefined,
-  //   error: undefined
-  // }
-  console.log(extractResult);
+  console.log("\n🔍 Starting crawler for the following URLs:");
+  console.log(URLS.map((url) => `  • ${url}`).join("\n"), "\n");
+
+  const spinner = ora("Extracting data...").start();
+  const startTime = Date.now();
+
+  // Update spinner text with elapsed time every second
+  timer = setInterval(() => {
+    const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+    spinner.text = `Extracting data... (${elapsedSeconds}s elapsed)`;
+  }, 1000);
+
+  try {
+    const extractResult = await app.extract(URLS, {
+      prompt: PROMPT,
+      schema,
+      enableWebSearch: true,
+    });
+    clearInterval(timer);
+    spinner.succeed(
+      `Extraction completed in ${Math.floor((Date.now() - startTime) / 1000)}s`
+    );
+    console.log(extractResult);
+  } catch (error) {
+    clearInterval(timer);
+    spinner.fail("Extraction failed");
+    throw error;
+  }
 }
 
 main()
