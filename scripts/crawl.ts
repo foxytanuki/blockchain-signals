@@ -51,6 +51,8 @@ class MultiSpinner {
     { status: "spinning" | "success" | "error"; message: string }
   >;
   private urls: string[];
+  private startTime: number;
+  private initialCursorPosition: number;
 
   constructor(urls: string[]) {
     this.frames = cliSpinners.dots.frames;
@@ -59,6 +61,8 @@ class MultiSpinner {
     this.timer = null;
     this.states = new Map();
     this.urls = urls;
+    this.startTime = Date.now();
+    this.initialCursorPosition = 0;
 
     urls.forEach((url) => {
       this.states.set(url, {
@@ -71,12 +75,18 @@ class MultiSpinner {
   start() {
     if (this.timer) return;
 
-    // Clear lines for all spinners
+    // Save initial cursor position
+    process.stdout.write(ansiEscapes.cursorSavePosition);
+    this.initialCursorPosition = process.stdout.rows;
+
     process.stdout.write(ansiEscapes.cursorHide);
-    this.urls.forEach(() => {
-      console.log();
-    });
-    process.stdout.write(ansiEscapes.cursorUp(this.urls.length));
+
+    // Create initial blank lines for our display area
+    process.stdout.write("\n".repeat(this.urls.length + 2));
+    process.stdout.write(ansiEscapes.cursorRestorePosition);
+
+    // Initial render
+    this.render();
 
     this.timer = setInterval(() => {
       this.render();
@@ -89,6 +99,9 @@ class MultiSpinner {
       clearInterval(this.timer);
       this.timer = null;
       process.stdout.write(ansiEscapes.cursorShow);
+      // Ensure we're at the bottom of our display area
+      process.stdout.write(ansiEscapes.cursorRestorePosition);
+      process.stdout.write("\n".repeat(this.urls.length + 2));
     }
   }
 
@@ -102,7 +115,36 @@ class MultiSpinner {
     this.render();
   }
 
+  private getElapsedTimeString(): string {
+    const elapsedSeconds = Math.floor((Date.now() - this.startTime) / 1000);
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = elapsedSeconds % 60;
+
+    const timeStr = [
+      minutes > 0 ? `${minutes}m` : null,
+      `${seconds.toString().padStart(2, "0")}s`,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    return `⏱️  Elapsed time: ${timeStr} ${this.getSpeedEmoji(elapsedSeconds)}`;
+  }
+
+  private getSpeedEmoji(seconds: number): string {
+    if (seconds < 10) return "⚡"; // Fast
+    if (seconds < 30) return "🚀"; // Medium
+    if (seconds < 60) return "🐢"; // Slow
+    return "🐌"; // Very slow
+  }
+
   private render() {
+    // Restore to our initial position
+    process.stdout.write(ansiEscapes.cursorRestorePosition);
+
+    // Clear the display area
+    process.stdout.write(ansiEscapes.eraseDown);
+
+    // Render each URL status
     this.urls.forEach((url) => {
       const state = this.states.get(url)!;
       let symbol: string;
@@ -121,7 +163,9 @@ class MultiSpinner {
 
       process.stdout.write(`${symbol} ${state.message}\n`);
     });
-    process.stdout.write(ansiEscapes.cursorUp(this.urls.length));
+
+    // Display elapsed time
+    process.stdout.write(`\n${this.getElapsedTimeString()}`);
   }
 }
 
