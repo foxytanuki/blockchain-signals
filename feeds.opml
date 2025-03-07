@@ -52,7 +52,7 @@
     <outline text="Privacy" title="Privacy">
       <outline text="Electric Coin Company - Website" title="Electric Coin Company - Website" type="rss" xmlUrl="https://electriccoin.co/feed/" htmlUrl="https://electriccoin.co/"/>
       <outline text="HOPR - Medium" title="HOPR - Medium" type="rss" xmlUrl="https://medium.com/feed/hoprnet" htmlUrl="https://medium.com/hoprnet?source=rss----e2d690217e99---4"/>
-      <outline text="Nym - Medium" title="Nym - Medium" type="rss" xmlUrl="https://medium.com/feed/@nymtech" htmlUrl="https://medium.com/@nymtech?source=rss-31df456bf882------2"/>
+      <outline text="Brave Browser - Brave" title="Brave Browser - Brave" type="rss" xmlUrl="https://brave.com/blog/index.xml" htmlUrl="https://brave.com/blog/"/>
     </outline>
     <outline text="Docs" title="Docs">
       <outline text="SUAVE docs - Latest commits" title="SUAVE docs - Latest commits" type="rss" xmlUrl="https://github.com/flashbots/suave-docs/commits/main.atom" htmlUrl="https://github.com/flashbots/suave-docs/commits/main"/>
@@ -82,12 +82,6 @@
       <outline text="Sigma Prime - Blog" title="Sigma Prime - Blog" type="rss" xmlUrl="https://blog.sigmaprime.io/feeds/all.atom.xml" htmlUrl="https://blog.sigmaprime.io/"/>
       <outline text="SlowMist - Medium" title="SlowMist - Medium" type="rss" xmlUrl="https://slowmist.medium.com/feed" htmlUrl="https://medium.com/@slowmist?source=rss-4ceeedda40e8------2"/>
       <outline text="Thales - Medium" title="Thales - Medium" type="rss" xmlUrl="https://medium.com/feed/@thalesmarket" htmlUrl="https://medium.com/@thalesmarket?source=rss-485757756f28------2"/>
-    </outline>
-    <outline text="Exchange" title="Exchange">
-      <outline text="Bitfinex Blog - Bitfinex" title="Bitfinex Blog - Bitfinex" type="rss" xmlUrl="http://blog.bitfinex.com/feed/" htmlUrl="https://blog.bitfinex.com/"/>
-      <outline text="BitMEX Blog - BitMEX" title="BitMEX Blog - BitMEX" type="rss" xmlUrl="https://blog.bitmex.com/feed/" htmlUrl="https://blog.bitmex.com/"/>
-      <outline text="Deribit Insights - Deribit" title="Deribit Insights - Deribit" type="rss" xmlUrl="https://blog.deribit.com/feed/" htmlUrl="https://blog.deribit.com/"/>
-      <outline text="Kraken Blog - Kraken" title="Kraken Blog - Kraken" type="rss" xmlUrl="https://blog.kraken.com/feed/" htmlUrl="https://blog.kraken.com/"/>
     </outline>
     <outline text="GithubReleases" title="GithubReleases">
       <outline text="suave-geth - Releases" title="suave-geth - Releases" type="rss" xmlUrl="https://github.com/flashbots/suave-geth/releases.atom" htmlUrl="https://github.com/flashbots/suave-geth/releases"/>
