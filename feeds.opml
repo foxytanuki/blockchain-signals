@@ -35,7 +35,6 @@
     </outline>
     <outline text="Layer2" title="Layer2">
       <outline text="Offchain Labs - Medium" title="Offchain Labs - Medium" type="rss" xmlUrl="https://offchain.medium.com/feed" htmlUrl="https://medium.com/@offchain?source=rss-bf4bb58fa5e5------2"/>
-      <outline text="Offchain Labs - Medium" title="Offchain Labs - Medium" type="rss" xmlUrl="https://medium.com/feed/offchainlabs" htmlUrl="https://medium.com/offchainlabs?source=rss----8fe9b9975433---4"/>
     </outline>
     <outline text="Privacy" title="Privacy">
       <outline text="Brave Browser - Brave" title="Brave Browser - Brave" type="rss" xmlUrl="https://brave.com/blog/index.xml" htmlUrl="https://brave.com/blog/"/>
