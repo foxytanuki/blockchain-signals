@@ -13,7 +13,6 @@
       <outline text="Celestia - Blog" title="Celestia - Blog" type="rss" xmlUrl="https://blog.celestia.org/rss/" htmlUrl="https://blog.celestia.org"/>
       <outline text="Chainlink - Blog" title="Chainlink - Blog" type="rss" xmlUrl="https://blog.chain.link/rss/" htmlUrl="https://blog.chain.link"/>
       <outline text="Compound - Blog" title="Compound - Blog" type="rss" xmlUrl="https://medium.com/feed/compound-finance" htmlUrl="https://medium.com/compound-finance"/>
-      <outline text="Cosmos - Blog" title="Cosmos - Blog" type="rss" xmlUrl="https://blog.cosmos.network/feed" htmlUrl="https://blog.cosmos.network"/>
       <outline text="EigenLayer - Blog" title="EigenLayer - Blog" type="rss" xmlUrl="https://www.blog.eigenlayer.xyz/rss/" htmlUrl="https://www.blog.eigenlayer.xyz"/>
       <outline text="Ethereum - Blog" title="Ethereum - Blog" type="rss" xmlUrl="https://blog.ethereum.org/feed.xml" htmlUrl="https://blog.ethereum.org"/>
       <outline text="Flashbots - Blog" title="Flashbots - Blog" type="rss" xmlUrl="https://writings.flashbots.net/rss.xml" htmlUrl="https://writings.flashbots.net"/>
@@ -21,7 +20,6 @@
       <outline text="Lido - Blog" title="Lido - Blog" type="rss" xmlUrl="https://blog.lido.fi/rss/" htmlUrl="https://blog.lido.fi"/>
       <outline text="NEAR - Blog" title="NEAR - Blog" type="rss" xmlUrl="https://medium.com/feed/nearprotocol" htmlUrl="https://medium.com/nearprotocol"/>
       <outline text="OpenZeppelin - Blog" title="OpenZeppelin - Blog" type="rss" xmlUrl="https://blog.openzeppelin.com/rss.xml" htmlUrl="https://blog.openzeppelin.com"/>
-      <outline text="Optimism - Blog" title="Optimism - Blog" type="rss" xmlUrl="https://blog.optimism.io/rss/" htmlUrl="https://blog.optimism.io"/>
       <outline text="Polkadot - Blog" title="Polkadot - Blog" type="rss" xmlUrl="https://medium.com/feed/polkadot-network" htmlUrl="https://medium.com/polkadot-network"/>
       <outline text="Rocket Pool - Blog" title="Rocket Pool - Blog" type="rss" xmlUrl="https://medium.com/feed/rocket-pool" htmlUrl="https://medium.com/rocket-pool"/>
       <outline text="Sui - Blog" title="Sui - Blog" type="rss" xmlUrl="https://blog.sui.io/rss/" htmlUrl="https://blog.sui.io"/>
@@ -73,7 +71,6 @@
     <outline text="Governance" title="Governance">
       <outline text="Aave - Governance" title="Aave - Governance" type="rss" xmlUrl="https://governance.aave.com/latest.rss" htmlUrl="https://governance.aave.com/latest"/>
       <outline text="Arbitrum - Governance" title="Arbitrum - Governance" type="rss" xmlUrl="https://forum.arbitrum.foundation/latest.rss" htmlUrl="https://forum.arbitrum.foundation/latest"/>
-      <outline text="Compound - Governance" title="Compound - Governance" type="rss" xmlUrl="https://comp.xyz/latest.rss" htmlUrl="https://comp.xyz/latest"/>
       <outline text="Ethereum - Governance" title="Ethereum - Governance" type="rss" xmlUrl="https://ethereum-magicians.org/latest.rss" htmlUrl="https://ethereum-magicians.org/latest"/>
       <outline text="MakerDAO - Governance" title="MakerDAO - Governance" type="rss" xmlUrl="https://forum.makerdao.com/latest.rss" htmlUrl="https://forum.makerdao.com/latest"/>
       <outline text="Optimism - Governance" title="Optimism - Governance" type="rss" xmlUrl="https://gov.optimism.io/latest.rss" htmlUrl="https://gov.optimism.io/latest"/>
