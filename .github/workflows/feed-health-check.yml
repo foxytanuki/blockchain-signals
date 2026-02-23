@@ -1,0 +1,41 @@
+name: Feed Health Check
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Every Monday 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run health check
+        run: pnpm run check-feeds > /tmp/report.md
+
+      - name: Create issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('/tmp/report.md', 'utf8');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Feed Health Check - ${new Date().toISOString().split('T')[0]}`,
+              body,
+              labels: ['feed-health']
+            });
