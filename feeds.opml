@@ -16,7 +16,6 @@
       <outline text="DFINITY - Medium" title="DFINITY - Medium" type="rss" xmlUrl="https://medium.com/feed/@dfinity" htmlUrl="https://medium.com/@dfinity"/>
       <outline text="Enterprise Ethereum Alliance - Website" title="Enterprise Ethereum Alliance - Website" type="rss" xmlUrl="https://entethalliance.org/feed/" htmlUrl="https://entethalliance.org/"/>
       <outline text="Esprezzo Blog - Esprezzo" title="Esprezzo Blog - Esprezzo" type="rss" xmlUrl="https://blog.esprezzo.io/rss.xml" htmlUrl="https://blog.esprezzo.io/"/>
-      <outline text="Filecoin - Filecoin Blog" title="Filecoin - Filecoin Blog" type="rss" xmlUrl="https://filecoin.io/blog/feed/index.xml" htmlUrl="https://filecoin.io/blog/feed/index.xml"/>
       <outline text="FIO Blog - Medium" title="FIO Blog - Medium" type="rss" xmlUrl="https://medium.com/feed/fio-blog" htmlUrl="https://medium.com/fio-blog"/>
       <outline text="IPFS Blog &amp; News - IPFS" title="IPFS Blog &amp; News - IPFS" type="rss" xmlUrl="https://blog.ipfs.io/index.xml" htmlUrl="https://ipfs.io/blog/"/>
       <outline text="NEAR Protocol - Medium" title="NEAR Protocol - Medium" type="rss" xmlUrl="https://medium.com/feed/nearprotocol" htmlUrl="https://medium.com/nearprotocol"/>
@@ -24,7 +23,6 @@
       <outline text="OpenZeppelin blog - OpenZeppelin" title="OpenZeppelin blog - OpenZeppelin" type="rss" xmlUrl="https://blog.openzeppelin.com/rss.xml" htmlUrl="http://blog.openzeppelin.com/"/>
       <outline text="Status - Status" title="Status - Status" type="rss" xmlUrl="https://our.status.im/rss/" htmlUrl="https://our.status.im/"/>
       <outline text="SubQuery Network - Medium" title="SubQuery Network - Medium" type="rss" xmlUrl="https://medium.com/feed/@subquery" htmlUrl="https://medium.com/@subquery"/>
-      <outline text="The Sia Blog - Medium" title="The Sia Blog - Medium" type="rss" xmlUrl="https://blog.sia.tech/feed" htmlUrl="https://blog.sia.tech/"/>
       <outline text="Theta Network - Medium" title="Theta Network - Medium" type="rss" xmlUrl="https://medium.com/feed/theta-network" htmlUrl="https://medium.com/theta-network"/>
     </outline>
     <outline text="Layer1" title="Layer1">
@@ -53,10 +51,8 @@
       <outline text="Bounce.finance - Medium" title="Bounce.finance - Medium" type="rss" xmlUrl="https://medium.com/feed/@bouncefinance" htmlUrl="https://medium.com/@bouncefinance"/>
       <outline text="DeGate - Medium" title="DeGate - Medium" type="rss" xmlUrl="https://medium.com/feed/@degate" htmlUrl="https://medium.com/@degate"/>
       <outline text="dForce - Medium" title="dForce - Medium" type="rss" xmlUrl="https://medium.com/feed/dforcenet" htmlUrl="https://medium.com/dforcenet"/>
-      <outline text="rhino.fi - Website" title="rhino.fi - Website" type="rss" xmlUrl="https://rhino.fi/feed/" htmlUrl="https://rhino.fi/"/>
       <outline text="Rocket Pool - Medium" title="Rocket Pool - Medium" type="rss" xmlUrl="https://medium.com/feed/rocket-pool" htmlUrl="https://medium.com/rocket-pool"/>
       <outline text="Smart Token Labs - Medium" title="Smart Token Labs - Medium" type="rss" xmlUrl="https://medium.com/feed/alphawallet" htmlUrl="https://medium.com/alphawallet"/>
-      <outline text="Solv Protocol - Medium" title="Solv Protocol - Medium" type="rss" xmlUrl="https://solvprotocol.medium.com/feed" htmlUrl="https://medium.com/@solvprotocol"/>
       <outline text="Synthetix Blog - Synthetix" title="Synthetix Blog - Synthetix" type="rss" xmlUrl="https://blog.synthetix.io/rss/" htmlUrl="https://blog.synthetix.io/"/>
       <outline text="THORChain - Medium" title="THORChain - Medium" type="rss" xmlUrl="https://medium.com/feed/thorchain" htmlUrl="https://medium.com/thorchain"/>
     </outline>
