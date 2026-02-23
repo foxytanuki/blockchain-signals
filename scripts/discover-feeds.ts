@@ -15,7 +15,7 @@ interface Candidate {
   title: string;
   url: string;
   query: string;
-  reachable: boolean | null;
+  feedTitle: string | null;
 }
 
 async function braveSearch(
@@ -43,14 +43,23 @@ async function braveSearch(
 }
 
 function extractFeedUrl(url: string): string | null {
-  // Keep URLs that look like RSS/Atom feeds
   if (/\.(xml|atom|rss)$/i.test(url)) return url;
   if (/\/(feed|rss|atom)(\/|$)/i.test(url)) return url;
   if (/\/latest\.rss$/i.test(url)) return url;
   return null;
 }
 
-async function verifyFeed(url: string): Promise<boolean> {
+function getHostname(url: string): string | null {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return null;
+  }
+}
+
+async function verifyAndExtractTitle(
+  url: string
+): Promise<{ ok: boolean; title: string | null }> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), VERIFY_TIMEOUT_MS);
   try {
@@ -59,11 +68,16 @@ async function verifyFeed(url: string): Promise<boolean> {
       headers: { "User-Agent": "blockchain-signals-discovery/1.0" },
       redirect: "follow",
     });
-    if (!res.ok) return false;
+    if (!res.ok) return { ok: false, title: null };
     const body = await res.text();
-    return /<rss[\s>]/.test(body) || /<feed[\s>]/.test(body);
+    const isValid = /<rss[\s>]/.test(body) || /<feed[\s>]/.test(body);
+    if (!isValid) return { ok: false, title: null };
+
+    // Extract feed title
+    const titleMatch = body.match(/<title>([^<]+)<\/title>/);
+    return { ok: true, title: titleMatch ? titleMatch[1].trim() : null };
   } catch {
-    return false;
+    return { ok: false, title: null };
   } finally {
     clearTimeout(timer);
   }
@@ -80,16 +94,11 @@ async function main() {
   const existingUrls = new Set(
     feeds.map((f) => f.xmlUrl.toLowerCase().replace(/\/+$/, ""))
   );
-  const existingDomains = new Set(
-    feeds.map((f) => {
-      try {
-        return new URL(f.xmlUrl).hostname;
-      } catch {
-        return "";
-      }
-    })
+  const seenDomains = new Set(
+    feeds.map((f) => getHostname(f.xmlUrl)).filter(Boolean) as string[]
   );
 
+  // Collect candidate URLs, dedup by domain (keep first seen)
   const candidateMap = new Map<string, Candidate>();
 
   for (const query of SEARCH_QUERIES) {
@@ -97,100 +106,86 @@ async function main() {
     const results = await braveSearch(query, apiKey);
 
     for (const r of results) {
-      // Try the URL directly as a feed, or common feed paths
-      const urls = [r.url];
-      const feedUrl = extractFeedUrl(r.url);
-      if (feedUrl) urls.unshift(feedUrl);
+      const urls: string[] = [];
 
-      // Also try common feed paths for the domain
+      const feedUrl = extractFeedUrl(r.url);
+      if (feedUrl) urls.push(feedUrl);
+
+      // Try common feed paths
       try {
         const base = new URL(r.url).origin;
-        urls.push(`${base}/feed`, `${base}/rss`, `${base}/feed.xml`, `${base}/rss.xml`, `${base}/atom.xml`);
+        urls.push(
+          `${base}/feed`,
+          `${base}/rss`,
+          `${base}/feed.xml`,
+          `${base}/rss.xml`,
+          `${base}/atom.xml`
+        );
       } catch {
-        // ignore invalid URLs
+        // ignore
       }
 
       for (const url of urls) {
+        const hostname = getHostname(url);
+        if (!hostname) continue;
+        if (seenDomains.has(hostname)) continue;
+
         const normalized = url.toLowerCase().replace(/\/+$/, "");
         if (existingUrls.has(normalized)) continue;
 
-        // Skip if we already have a feed from this domain
-        try {
-          const hostname = new URL(url).hostname;
-          if (existingDomains.has(hostname)) continue;
-        } catch {
-          continue;
-        }
-
-        if (!candidateMap.has(normalized)) {
-          candidateMap.set(normalized, {
-            title: r.title,
-            url,
-            query,
-            reachable: null,
-          });
-        }
+        // First candidate for this domain wins
+        seenDomains.add(hostname);
+        candidateMap.set(normalized, {
+          title: r.title,
+          url,
+          query,
+          feedTitle: null,
+        });
+        break; // one per domain per search result
       }
     }
 
-    // Rate limit between searches
     await new Promise((r) => setTimeout(r, 1000));
   }
 
   const candidates = [...candidateMap.values()];
   console.error(`Verifying ${candidates.length} candidate URLs...`);
 
-  // Verify in batches of 5
-  const verified: Candidate[] = [];
+  // Verify in batches of 5, extract feed title
+  const confirmed: Candidate[] = [];
   for (let i = 0; i < candidates.length; i += 5) {
     const batch = candidates.slice(i, i + 5);
-    const results = await Promise.all(
+    await Promise.all(
       batch.map(async (c) => {
-        c.reachable = await verifyFeed(c.url);
-        return c;
+        const result = await verifyAndExtractTitle(c.url);
+        if (result.ok) {
+          c.feedTitle = result.title;
+          confirmed.push(c);
+        }
       })
     );
-    verified.push(...results);
   }
-
-  const confirmedFeeds = verified.filter((c) => c.reachable);
-  const unverified = verified.filter((c) => !c.reachable);
 
   // Output report
   const lines: string[] = [];
   lines.push("# Feed Discovery Report");
   lines.push("");
   lines.push(`**Date**: ${new Date().toISOString().split("T")[0]}`);
-  lines.push(
-    `**Candidates found**: ${candidates.length} | **Verified feeds**: ${confirmedFeeds.length}`
-  );
+  lines.push(`**Verified feeds**: ${confirmed.length}`);
   lines.push("");
 
-  if (confirmedFeeds.length > 0) {
-    lines.push("## Verified Feeds");
-    lines.push("");
-    lines.push("| # | Title | Feed URL | Found via |");
-    lines.push("|---|-------|----------|-----------|");
-    confirmedFeeds.forEach((c, i) => {
-      lines.push(`| ${i + 1} | ${c.title} | ${c.url} | ${c.query} |`);
+  if (confirmed.length > 0) {
+    lines.push("| # | Feed | URL | Found via |");
+    lines.push("|---|------|-----|-----------|");
+    confirmed.forEach((c, i) => {
+      const name = c.feedTitle ?? c.title;
+      lines.push(`| ${i + 1} | ${name} | ${c.url} | ${c.query} |`);
     });
-    lines.push("");
+  } else {
+    lines.push("No new feeds found this week.");
   }
 
-  if (unverified.length > 0) {
-    lines.push("<details>");
-    lines.push("<summary>Unverified candidates (" + unverified.length + ")</summary>");
-    lines.push("");
-    lines.push("| Title | URL | Found via |");
-    lines.push("|-------|-----|-----------|");
-    for (const c of unverified) {
-      lines.push(`| ${c.title} | ${c.url} | ${c.query} |`);
-    }
-    lines.push("");
-    lines.push("</details>");
-    lines.push("");
-  }
-
+  lines.push("");
   console.log(lines.join("\n"));
 }
 

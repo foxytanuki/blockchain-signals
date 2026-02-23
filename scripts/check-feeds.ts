@@ -140,13 +140,12 @@ function formatReport(results: FeedResult[]): string {
   lines.push(`**Total feeds**: ${results.length}`);
   lines.push("");
 
-  const summary = [
-    `Healthy: ${grouped.healthy.length}`,
-    `Stale: ${grouped.stale.length}`,
-    `Invalid: ${grouped.invalid.length}`,
-    `Dead: ${grouped.dead.length}`,
-  ];
-  lines.push(`| ${summary.join(" | ")} |`);
+  lines.push("| Status | Count |");
+  lines.push("|--------|-------|");
+  lines.push(`| Healthy | ${grouped.healthy.length} |`);
+  lines.push(`| Stale | ${grouped.stale.length} |`);
+  lines.push(`| Invalid | ${grouped.invalid.length} |`);
+  lines.push(`| Dead | ${grouped.dead.length} |`);
   lines.push("");
 
   if (grouped.dead.length > 0) {
