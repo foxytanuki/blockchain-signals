@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "check-feeds": "bun scripts/check-feeds.ts",
-    "discover-feeds": "bun scripts/discover-feeds.ts"
+    "discover-feeds": "bun scripts/discover-feeds.ts",
+    "remove-feeds": "bun scripts/remove-feeds.ts"
   },
   "keywords": [],
   "author": "foxytanuki",

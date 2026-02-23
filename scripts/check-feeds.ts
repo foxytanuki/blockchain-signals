@@ -1,3 +1,4 @@
+import { writeFileSync } from "node:fs";
 import { parseOpml, type Feed } from "./parse-opml.js";
 
 const TIMEOUT_MS = 15_000;
@@ -206,6 +207,14 @@ async function main() {
   console.error(`Checking ${feeds.length} feeds...`);
   const results = await runPool(feeds, CONCURRENCY);
   console.log(formatReport(results));
+
+  // Write dead feed URLs to JSON for automation
+  const deadUrls = results
+    .filter((r) => r.status === "dead")
+    .map((r) => r.feed.xmlUrl);
+  const outPath = process.env.DEAD_FEEDS_JSON ?? "/tmp/dead-feeds.json";
+  writeFileSync(outPath, JSON.stringify(deadUrls, null, 2));
+  console.error(`Dead feeds written to ${outPath}`);
 }
 
 main();

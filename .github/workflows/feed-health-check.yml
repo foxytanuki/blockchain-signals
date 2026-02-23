@@ -6,7 +6,9 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   check:
@@ -34,3 +36,43 @@ jobs:
               body,
               labels: ['feed-health']
             });
+
+      - name: Remove dead feeds and create PR
+        run: |
+          DEAD_COUNT=$(cat /tmp/dead-feeds.json | bun -e 'const d=await Bun.stdin.json();console.log(d.length)')
+          if [ "$DEAD_COUNT" = "0" ]; then
+            echo "No dead feeds found."
+            exit 0
+          fi
+
+          DATE=$(date +%Y-%m-%d)
+          BRANCH="chore/remove-dead-feeds-${DATE}"
+          git checkout -b "$BRANCH"
+
+          bun scripts/remove-feeds.ts /tmp/dead-feeds.json
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add feeds.opml
+          git commit -m "chore: remove ${DEAD_COUNT} dead feed(s) detected on ${DATE}"
+          git push origin "$BRANCH"
+
+          REPORT=$(cat /tmp/report.md)
+          gh pr create \
+            --title "Remove ${DEAD_COUNT} dead feed(s) - ${DATE}" \
+            --body "$(cat <<EOF
+          ## Auto-detected dead feeds
+
+          The weekly health check found ${DEAD_COUNT} dead feed(s). This PR removes them from \`feeds.opml\`.
+
+          <details>
+          <summary>Full health check report</summary>
+
+          ${REPORT}
+
+          </details>
+          EOF
+          )" \
+            --label "feed-health"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
