@@ -14,17 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - uses: oven-sh/setup-bun@v2
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
+      - run: bun install --frozen-lockfile
 
       - name: Run health check
-        run: pnpm run check-feeds > /tmp/report.md
+        run: bun run check-feeds > /tmp/report.md
 
       - name: Create issue
         uses: actions/github-script@v7
