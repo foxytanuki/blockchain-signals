@@ -1,68 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <opml version="1.0">
   <head>
-    <title>Feeds of foxy tanuki from Inoreader [https://www.inoreader.com]</title>
+    <title>blockchain-signals</title>
   </head>
   <body>
-    <outline text="Infrastructure" title="Infrastructure">
-      <outline text="Blocknative - Blocknative" title="Blocknative - Blocknative" type="rss" xmlUrl="https://blog.blocknative.com/blog/rss.xml" htmlUrl="https://blog.blocknative.com/blog"/>
-      <outline text="Blockstream - Blog" title="Blockstream - Blog" type="rss" xmlUrl="https://blog.blockstream.com/rss/" htmlUrl="https://blog.blockstream.com/"/>
-      <outline text="bloXroute Team - Medium" title="bloXroute Team - Medium" type="rss" xmlUrl="https://medium.com/feed/@bloxroutelabs" htmlUrl="https://medium.com/@bloxroutelabs"/>
-      <outline text="Breez Technology - Medium" title="Breez Technology - Medium" type="rss" xmlUrl="https://medium.com/feed/breez-technology" htmlUrl="https://medium.com/breez-technology"/>
-      <outline text="Casa Blog - Casa" title="Casa Blog - Casa" type="rss" xmlUrl="https://blog.keys.casa/rss/" htmlUrl="https://blog.keys.casa/"/>
-      <outline text="Celestia Blog - Celestia" title="Celestia Blog - Celestia" type="rss" xmlUrl="https://blog.celestia.org/rss/" htmlUrl="https://blog.celestia.org/"/>
-      <outline text="Chainlink - Chainlink Blog" title="Chainlink - Chainlink Blog" type="rss" xmlUrl="https://blog.chain.link/rss/" htmlUrl="https://blog.chain.link/"/>
-      <outline text="ChainSafe - Medium" title="ChainSafe - Medium" type="rss" xmlUrl="https://blog.chainsafe.io/rss/" htmlUrl="https://blog.chainsafe.io/"/>
-      <outline text="DFINITY - Medium" title="DFINITY - Medium" type="rss" xmlUrl="https://medium.com/feed/@dfinity" htmlUrl="https://medium.com/@dfinity"/>
-      <outline text="Enterprise Ethereum Alliance - Website" title="Enterprise Ethereum Alliance - Website" type="rss" xmlUrl="https://entethalliance.org/feed/" htmlUrl="https://entethalliance.org/"/>
-      <outline text="Esprezzo Blog - Esprezzo" title="Esprezzo Blog - Esprezzo" type="rss" xmlUrl="https://blog.esprezzo.io/rss.xml" htmlUrl="https://blog.esprezzo.io/"/>
-      <outline text="FIO Blog - Medium" title="FIO Blog - Medium" type="rss" xmlUrl="https://medium.com/feed/fio-blog" htmlUrl="https://medium.com/fio-blog"/>
-      <outline text="IPFS Blog &amp; News - IPFS" title="IPFS Blog &amp; News - IPFS" type="rss" xmlUrl="https://blog.ipfs.io/index.xml" htmlUrl="https://ipfs.io/blog/"/>
-      <outline text="NEAR Protocol - Medium" title="NEAR Protocol - Medium" type="rss" xmlUrl="https://medium.com/feed/nearprotocol" htmlUrl="https://medium.com/nearprotocol"/>
-      <outline text="NKN - Medium" title="NKN - Medium" type="rss" xmlUrl="https://medium.com/feed/nknetwork" htmlUrl="https://medium.com/nknetwork"/>
-      <outline text="OpenZeppelin blog - OpenZeppelin" title="OpenZeppelin blog - OpenZeppelin" type="rss" xmlUrl="https://blog.openzeppelin.com/rss.xml" htmlUrl="http://blog.openzeppelin.com/"/>
-      <outline text="Status - Status" title="Status - Status" type="rss" xmlUrl="https://our.status.im/rss/" htmlUrl="https://our.status.im/"/>
-      <outline text="SubQuery Network - Medium" title="SubQuery Network - Medium" type="rss" xmlUrl="https://medium.com/feed/@subquery" htmlUrl="https://medium.com/@subquery"/>
-      <outline text="Theta Network - Medium" title="Theta Network - Medium" type="rss" xmlUrl="https://medium.com/feed/theta-network" htmlUrl="https://medium.com/theta-network"/>
+    <outline text="Blog" title="Blog">
+      <outline text="Algorand - Blog" title="Algorand - Blog" type="rss" xmlUrl="https://algorand.co/blog/rss.xml" htmlUrl="https://algorand.co/blog"/>
+      <outline text="Aptos - Blog" title="Aptos - Blog" type="rss" xmlUrl="https://medium.com/feed/aptoslabs" htmlUrl="https://medium.com/aptoslabs"/>
+      <outline text="Arbitrum - Blog" title="Arbitrum - Blog" type="rss" xmlUrl="https://offchain.medium.com/feed" htmlUrl="https://offchain.medium.com"/>
+      <outline text="Avalanche - Blog" title="Avalanche - Blog" type="rss" xmlUrl="https://medium.com/feed/avalancheavax" htmlUrl="https://medium.com/avalancheavax"/>
+      <outline text="Brave - Blog" title="Brave - Blog" type="rss" xmlUrl="https://brave.com/blog/index.xml" htmlUrl="https://brave.com/blog"/>
+      <outline text="Celestia - Blog" title="Celestia - Blog" type="rss" xmlUrl="https://blog.celestia.org/rss/" htmlUrl="https://blog.celestia.org"/>
+      <outline text="Chainlink - Blog" title="Chainlink - Blog" type="rss" xmlUrl="https://blog.chain.link/rss/" htmlUrl="https://blog.chain.link"/>
+      <outline text="Compound - Blog" title="Compound - Blog" type="rss" xmlUrl="https://medium.com/feed/compound-finance" htmlUrl="https://medium.com/compound-finance"/>
+      <outline text="Cosmos - Blog" title="Cosmos - Blog" type="rss" xmlUrl="https://blog.cosmos.network/feed" htmlUrl="https://blog.cosmos.network"/>
+      <outline text="EigenLayer - Blog" title="EigenLayer - Blog" type="rss" xmlUrl="https://www.blog.eigenlayer.xyz/rss/" htmlUrl="https://www.blog.eigenlayer.xyz"/>
+      <outline text="Ethereum - Blog" title="Ethereum - Blog" type="rss" xmlUrl="https://blog.ethereum.org/feed.xml" htmlUrl="https://blog.ethereum.org"/>
+      <outline text="Flashbots - Blog" title="Flashbots - Blog" type="rss" xmlUrl="https://writings.flashbots.net/rss.xml" htmlUrl="https://writings.flashbots.net"/>
+      <outline text="IPFS - Blog" title="IPFS - Blog" type="rss" xmlUrl="https://blog.ipfs.io/index.xml" htmlUrl="https://blog.ipfs.io"/>
+      <outline text="Lido - Blog" title="Lido - Blog" type="rss" xmlUrl="https://blog.lido.fi/rss/" htmlUrl="https://blog.lido.fi"/>
+      <outline text="NEAR - Blog" title="NEAR - Blog" type="rss" xmlUrl="https://medium.com/feed/nearprotocol" htmlUrl="https://medium.com/nearprotocol"/>
+      <outline text="OpenZeppelin - Blog" title="OpenZeppelin - Blog" type="rss" xmlUrl="https://blog.openzeppelin.com/rss.xml" htmlUrl="https://blog.openzeppelin.com"/>
+      <outline text="Optimism - Blog" title="Optimism - Blog" type="rss" xmlUrl="https://blog.optimism.io/rss/" htmlUrl="https://blog.optimism.io"/>
+      <outline text="Polkadot - Blog" title="Polkadot - Blog" type="rss" xmlUrl="https://medium.com/feed/polkadot-network" htmlUrl="https://medium.com/polkadot-network"/>
+      <outline text="Rocket Pool - Blog" title="Rocket Pool - Blog" type="rss" xmlUrl="https://medium.com/feed/rocket-pool" htmlUrl="https://medium.com/rocket-pool"/>
+      <outline text="Sui - Blog" title="Sui - Blog" type="rss" xmlUrl="https://blog.sui.io/rss/" htmlUrl="https://blog.sui.io"/>
+      <outline text="Synthetix - Blog" title="Synthetix - Blog" type="rss" xmlUrl="https://blog.synthetix.io/rss/" htmlUrl="https://blog.synthetix.io"/>
+      <outline text="Zcash - Blog" title="Zcash - Blog" type="rss" xmlUrl="https://electriccoin.co/feed/" htmlUrl="https://electriccoin.co"/>
+      <outline text="zkSync - Blog" title="zkSync - Blog" type="rss" xmlUrl="https://blog.matter-labs.io/feed" htmlUrl="https://blog.matter-labs.io"/>
     </outline>
-    <outline text="Layer1" title="Layer1">
-      <outline text="Algorand" title="Algorand" type="rss" xmlUrl="https://algorand.co/blog/rss.xml" htmlUrl="https://algorand.co/blog"/>
-      <outline text="Celo Blog - Medium" title="Celo Blog - Medium" type="rss" xmlUrl="https://medium.com/feed/celoorg" htmlUrl="https://medium.com/celoorg"/>
-      <outline text="Neo blog posts - Neo" title="Neo blog posts - Neo" type="rss" xmlUrl="https://neo.org/blog/rss?language=zh" htmlUrl="https://neo.org/blog"/>
-      <outline text="Sui - sui.io" title="Sui - sui.io" type="rss" xmlUrl="https://blog.sui.io/rss/" htmlUrl="https://blog.sui.io/"/>
-    </outline>
-    <outline text="Layer2" title="Layer2">
-      <outline text="Offchain Labs - Medium" title="Offchain Labs - Medium" type="rss" xmlUrl="https://offchain.medium.com/feed" htmlUrl="https://medium.com/@offchain"/>
-    </outline>
-    <outline text="Privacy" title="Privacy">
-      <outline text="Brave Browser - Brave" title="Brave Browser - Brave" type="rss" xmlUrl="https://brave.com/blog/index.xml" htmlUrl="https://brave.com/blog/"/>
-      <outline text="Electric Coin Company - Website" title="Electric Coin Company - Website" type="rss" xmlUrl="https://electriccoin.co/feed/" htmlUrl="https://electriccoin.co/"/>
-    </outline>
-    <outline text="Research" title="Research">
-      <outline text="Coin Center - Coin Center" title="Coin Center - Coin Center" type="rss" xmlUrl="https://www.coincenter.org/feed" htmlUrl="https://www.coincenter.org/"/>
-      <outline text="Ethereum Blog - ethereum.org" title="Ethereum Blog - ethereum.org" type="rss" xmlUrl="https://blog.ethereum.org/feed.xml" htmlUrl="https://blog.ethereum.org/"/>
-      <outline text="Grayscale Investments - GlobeNewswire" title="Grayscale Investments - GlobeNewswire" type="rss" xmlUrl="https://www.globenewswire.com/SubscribeToRss/uYBer3uzJgsFPGKc1jORaA%3d%3d" htmlUrl="https://www.globenewswire.com/RssFeed/Organization/jINPji4SQ9aFRzTPilg1xQ=="/>
-      <outline text="Nomic Foundation - Medium" title="Nomic Foundation - Medium" type="rss" xmlUrl="https://medium.com/feed/nomic-foundation-blog" htmlUrl="https://medium.com/nomic-foundation-blog"/>
-      <outline text="PayPal Newsroom - PayPal" title="PayPal Newsroom - PayPal" type="rss" xmlUrl="https://newsroom.paypal-corp.com/news?pagetemplate=rss" htmlUrl="https://newsroom.paypal-corp.com/"/>
-      <outline text="Sigma Prime - Blog" title="Sigma Prime - Blog" type="rss" xmlUrl="https://blog.sigmaprime.io/feeds/all.atom.xml" htmlUrl="https://blog.sigmaprime.io/"/>
-      <outline text="SlowMist - Medium" title="SlowMist - Medium" type="rss" xmlUrl="https://slowmist.medium.com/feed" htmlUrl="https://medium.com/@slowmist"/>
-    </outline>
-    <outline text="DeFi" title="DeFi">
-      <outline text="Bounce.finance - Medium" title="Bounce.finance - Medium" type="rss" xmlUrl="https://medium.com/feed/@bouncefinance" htmlUrl="https://medium.com/@bouncefinance"/>
-      <outline text="DeGate - Medium" title="DeGate - Medium" type="rss" xmlUrl="https://medium.com/feed/@degate" htmlUrl="https://medium.com/@degate"/>
-      <outline text="dForce - Medium" title="dForce - Medium" type="rss" xmlUrl="https://medium.com/feed/dforcenet" htmlUrl="https://medium.com/dforcenet"/>
-      <outline text="Rocket Pool - Medium" title="Rocket Pool - Medium" type="rss" xmlUrl="https://medium.com/feed/rocket-pool" htmlUrl="https://medium.com/rocket-pool"/>
-      <outline text="Smart Token Labs - Medium" title="Smart Token Labs - Medium" type="rss" xmlUrl="https://medium.com/feed/alphawallet" htmlUrl="https://medium.com/alphawallet"/>
-      <outline text="Synthetix Blog - Synthetix" title="Synthetix Blog - Synthetix" type="rss" xmlUrl="https://blog.synthetix.io/rss/" htmlUrl="https://blog.synthetix.io/"/>
-      <outline text="THORChain - Medium" title="THORChain - Medium" type="rss" xmlUrl="https://medium.com/feed/thorchain" htmlUrl="https://medium.com/thorchain"/>
+    <outline text="Releases" title="Releases">
+      <outline text="Aave - aave-v3-core Releases" title="Aave - aave-v3-core Releases" type="rss" xmlUrl="https://github.com/aave/aave-v3-core/releases.atom" htmlUrl="https://github.com/aave/aave-v3-core/releases"/>
+      <outline text="Algorand - go-algorand Releases" title="Algorand - go-algorand Releases" type="rss" xmlUrl="https://github.com/algorand/go-algorand/releases.atom" htmlUrl="https://github.com/algorand/go-algorand/releases"/>
+      <outline text="Aptos - aptos-core Releases" title="Aptos - aptos-core Releases" type="rss" xmlUrl="https://github.com/aptos-labs/aptos-core/releases.atom" htmlUrl="https://github.com/aptos-labs/aptos-core/releases"/>
+      <outline text="Arbitrum - nitro Releases" title="Arbitrum - nitro Releases" type="rss" xmlUrl="https://github.com/OffchainLabs/nitro/releases.atom" htmlUrl="https://github.com/OffchainLabs/nitro/releases"/>
+      <outline text="Avalanche - avalanchego Releases" title="Avalanche - avalanchego Releases" type="rss" xmlUrl="https://github.com/ava-labs/avalanchego/releases.atom" htmlUrl="https://github.com/ava-labs/avalanchego/releases"/>
+      <outline text="Base - node Releases" title="Base - node Releases" type="rss" xmlUrl="https://github.com/base-org/node/releases.atom" htmlUrl="https://github.com/base-org/node/releases"/>
+      <outline text="Celestia - celestia-node Releases" title="Celestia - celestia-node Releases" type="rss" xmlUrl="https://github.com/celestiaorg/celestia-node/releases.atom" htmlUrl="https://github.com/celestiaorg/celestia-node/releases"/>
+      <outline text="Chainlink - chainlink Releases" title="Chainlink - chainlink Releases" type="rss" xmlUrl="https://github.com/smartcontractkit/chainlink/releases.atom" htmlUrl="https://github.com/smartcontractkit/chainlink/releases"/>
+      <outline text="Compound - compound-protocol Releases" title="Compound - compound-protocol Releases" type="rss" xmlUrl="https://github.com/compound-finance/compound-protocol/releases.atom" htmlUrl="https://github.com/compound-finance/compound-protocol/releases"/>
+      <outline text="Cosmos - cosmos-sdk Releases" title="Cosmos - cosmos-sdk Releases" type="rss" xmlUrl="https://github.com/cosmos/cosmos-sdk/releases.atom" htmlUrl="https://github.com/cosmos/cosmos-sdk/releases"/>
+      <outline text="Curve - curve-contract Releases" title="Curve - curve-contract Releases" type="rss" xmlUrl="https://github.com/curvefi/curve-contract/releases.atom" htmlUrl="https://github.com/curvefi/curve-contract/releases"/>
+      <outline text="EigenLayer - eigenlayer-contracts Releases" title="EigenLayer - eigenlayer-contracts Releases" type="rss" xmlUrl="https://github.com/Layr-Labs/eigenlayer-contracts/releases.atom" htmlUrl="https://github.com/Layr-Labs/eigenlayer-contracts/releases"/>
+      <outline text="Ethereum - go-ethereum Releases" title="Ethereum - go-ethereum Releases" type="rss" xmlUrl="https://github.com/ethereum/go-ethereum/releases.atom" htmlUrl="https://github.com/ethereum/go-ethereum/releases"/>
+      <outline text="Flashbots - mev-boost Releases" title="Flashbots - mev-boost Releases" type="rss" xmlUrl="https://github.com/flashbots/mev-boost/releases.atom" htmlUrl="https://github.com/flashbots/mev-boost/releases"/>
+      <outline text="IPFS - kubo Releases" title="IPFS - kubo Releases" type="rss" xmlUrl="https://github.com/ipfs/kubo/releases.atom" htmlUrl="https://github.com/ipfs/kubo/releases"/>
+      <outline text="Lido - lido-dao Releases" title="Lido - lido-dao Releases" type="rss" xmlUrl="https://github.com/lidofinance/lido-dao/releases.atom" htmlUrl="https://github.com/lidofinance/lido-dao/releases"/>
+      <outline text="NEAR - nearcore Releases" title="NEAR - nearcore Releases" type="rss" xmlUrl="https://github.com/near/nearcore/releases.atom" htmlUrl="https://github.com/near/nearcore/releases"/>
+      <outline text="OpenZeppelin - openzeppelin-contracts Releases" title="OpenZeppelin - openzeppelin-contracts Releases" type="rss" xmlUrl="https://github.com/OpenZeppelin/openzeppelin-contracts/releases.atom" htmlUrl="https://github.com/OpenZeppelin/openzeppelin-contracts/releases"/>
+      <outline text="Optimism - optimism Releases" title="Optimism - optimism Releases" type="rss" xmlUrl="https://github.com/ethereum-optimism/optimism/releases.atom" htmlUrl="https://github.com/ethereum-optimism/optimism/releases"/>
+      <outline text="Polkadot - runtimes Releases" title="Polkadot - runtimes Releases" type="rss" xmlUrl="https://github.com/polkadot-fellows/runtimes/releases.atom" htmlUrl="https://github.com/polkadot-fellows/runtimes/releases"/>
+      <outline text="Polygon - polygon-edge Releases" title="Polygon - polygon-edge Releases" type="rss" xmlUrl="https://github.com/0xPolygon/polygon-edge/releases.atom" htmlUrl="https://github.com/0xPolygon/polygon-edge/releases"/>
+      <outline text="Rocket Pool - rocketpool Releases" title="Rocket Pool - rocketpool Releases" type="rss" xmlUrl="https://github.com/rocket-pool/rocketpool/releases.atom" htmlUrl="https://github.com/rocket-pool/rocketpool/releases"/>
+      <outline text="Scroll - scroll Releases" title="Scroll - scroll Releases" type="rss" xmlUrl="https://github.com/scroll-tech/scroll/releases.atom" htmlUrl="https://github.com/scroll-tech/scroll/releases"/>
+      <outline text="Solana - solana Releases" title="Solana - solana Releases" type="rss" xmlUrl="https://github.com/solana-labs/solana/releases.atom" htmlUrl="https://github.com/solana-labs/solana/releases"/>
+      <outline text="StarkNet - cairo Releases" title="StarkNet - cairo Releases" type="rss" xmlUrl="https://github.com/starkware-libs/cairo/releases.atom" htmlUrl="https://github.com/starkware-libs/cairo/releases"/>
+      <outline text="Sui - sui Releases" title="Sui - sui Releases" type="rss" xmlUrl="https://github.com/MystenLabs/sui/releases.atom" htmlUrl="https://github.com/MystenLabs/sui/releases"/>
+      <outline text="Synthetix - synthetix Releases" title="Synthetix - synthetix Releases" type="rss" xmlUrl="https://github.com/Synthetixio/synthetix/releases.atom" htmlUrl="https://github.com/Synthetixio/synthetix/releases"/>
+      <outline text="The Graph - graph-node Releases" title="The Graph - graph-node Releases" type="rss" xmlUrl="https://github.com/graphprotocol/graph-node/releases.atom" htmlUrl="https://github.com/graphprotocol/graph-node/releases"/>
+      <outline text="Uniswap - v4-core Releases" title="Uniswap - v4-core Releases" type="rss" xmlUrl="https://github.com/Uniswap/v4-core/releases.atom" htmlUrl="https://github.com/Uniswap/v4-core/releases"/>
+      <outline text="Zcash - zcash Releases" title="Zcash - zcash Releases" type="rss" xmlUrl="https://github.com/zcash/zcash/releases.atom" htmlUrl="https://github.com/zcash/zcash/releases"/>
+      <outline text="zkSync - zksync-era Releases" title="zkSync - zksync-era Releases" type="rss" xmlUrl="https://github.com/matter-labs/zksync-era/releases.atom" htmlUrl="https://github.com/matter-labs/zksync-era/releases"/>
     </outline>
     <outline text="Forum" title="Forum">
-      <outline text="Anoma - Latest topics" title="Anoma - Latest topics" type="rss" xmlUrl="https://research.anoma.net/latest.rss" htmlUrl="https://research.anoma.net"/>
-      <outline text="Ethereum Research - Latest topics" title="Ethereum Research - Latest topics" type="rss" xmlUrl="https://ethresear.ch/latest.rss" htmlUrl="http://ethresear.ch/latest"/>
-      <outline text="Flashbots - Latest topics" title="Flashbots - Latest topics" type="rss" xmlUrl="https://collective.flashbots.net/latest.rss" htmlUrl="https://collective.flashbots.net"/>
+      <outline text="Cosmos - Forum" title="Cosmos - Forum" type="rss" xmlUrl="https://forum.cosmos.network/latest.rss" htmlUrl="https://forum.cosmos.network/latest"/>
+      <outline text="EigenLayer - Forum" title="EigenLayer - Forum" type="rss" xmlUrl="https://forum.eigenlayer.xyz/latest.rss" htmlUrl="https://forum.eigenlayer.xyz/latest"/>
+      <outline text="Ethereum - Forum" title="Ethereum - Forum" type="rss" xmlUrl="https://ethresear.ch/latest.rss" htmlUrl="https://ethresear.ch/latest"/>
+      <outline text="Flashbots - Forum" title="Flashbots - Forum" type="rss" xmlUrl="https://collective.flashbots.net/latest.rss" htmlUrl="https://collective.flashbots.net/latest"/>
+      <outline text="StarkNet - Forum" title="StarkNet - Forum" type="rss" xmlUrl="https://community.starknet.io/latest.rss" htmlUrl="https://community.starknet.io/latest"/>
+      <outline text="The Graph - Forum" title="The Graph - Forum" type="rss" xmlUrl="https://forum.thegraph.com/latest.rss" htmlUrl="https://forum.thegraph.com/latest"/>
     </outline>
-    <outline text="GithubReleases" title="GithubReleases">
-      <outline text="go-ethereum - Releases" title="go-ethereum - Releases" type="rss" xmlUrl="https://github.com/ethereum/go-ethereum/releases.atom" htmlUrl="https://github.com/ethereum/go-ethereum/releases"/>
+    <outline text="Governance" title="Governance">
+      <outline text="Aave - Governance" title="Aave - Governance" type="rss" xmlUrl="https://governance.aave.com/latest.rss" htmlUrl="https://governance.aave.com/latest"/>
+      <outline text="Arbitrum - Governance" title="Arbitrum - Governance" type="rss" xmlUrl="https://forum.arbitrum.foundation/latest.rss" htmlUrl="https://forum.arbitrum.foundation/latest"/>
+      <outline text="Compound - Governance" title="Compound - Governance" type="rss" xmlUrl="https://comp.xyz/latest.rss" htmlUrl="https://comp.xyz/latest"/>
+      <outline text="Ethereum - Governance" title="Ethereum - Governance" type="rss" xmlUrl="https://ethereum-magicians.org/latest.rss" htmlUrl="https://ethereum-magicians.org/latest"/>
+      <outline text="MakerDAO - Governance" title="MakerDAO - Governance" type="rss" xmlUrl="https://forum.makerdao.com/latest.rss" htmlUrl="https://forum.makerdao.com/latest"/>
+      <outline text="Optimism - Governance" title="Optimism - Governance" type="rss" xmlUrl="https://gov.optimism.io/latest.rss" htmlUrl="https://gov.optimism.io/latest"/>
+      <outline text="Uniswap - Governance" title="Uniswap - Governance" type="rss" xmlUrl="https://gov.uniswap.org/latest.rss" htmlUrl="https://gov.uniswap.org/latest"/>
+    </outline>
+    <outline text="Research" title="Research">
+      <outline text="Lido - Research" title="Lido - Research" type="rss" xmlUrl="https://research.lido.fi/latest.rss" htmlUrl="https://research.lido.fi"/>
     </outline>
   </body>
 </opml>

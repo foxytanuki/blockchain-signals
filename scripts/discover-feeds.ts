@@ -1,192 +1,327 @@
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { parseOpml } from "./parse-opml.js";
+import { verifyFeed } from "./feed-utils.js";
+import {
+  PROTOCOLS,
+  resolveAllFeeds,
+  findUnresolvedSources,
+  type ResolvedFeed,
+  type SourceType,
+} from "./protocols.js";
+import { generateOpml } from "./generate-opml.js";
 
 const BRAVE_API = "https://api.search.brave.com/res/v1/web/search";
-const VERIFY_TIMEOUT_MS = 10_000;
+const CONCURRENCY = 5;
 
-const SEARCH_QUERIES = [
-  "blockchain protocol blog RSS feed",
-  "crypto security research RSS atom feed",
-  "ethereum L2 rollup blog RSS feed",
-  "web3 developer tooling blog RSS feed",
-  "DeFi protocol engineering blog RSS",
-];
-
-interface Candidate {
-  title: string;
-  url: string;
-  query: string;
-  feedTitle: string | null;
-}
+// ── Brave Search ──
 
 async function braveSearch(
   query: string,
   apiKey: string
 ): Promise<{ title: string; url: string }[]> {
-  const params = new URLSearchParams({ q: query, count: "20" });
-  const res = await fetch(`${BRAVE_API}?${params}`, {
-    headers: {
-      Accept: "application/json",
-      "Accept-Encoding": "gzip",
-      "X-Subscription-Token": apiKey,
-    },
-  });
+  try {
+    const params = new URLSearchParams({ q: query, count: "20" });
+    const res = await fetch(`${BRAVE_API}?${params}`, {
+      headers: {
+        Accept: "application/json",
+        "Accept-Encoding": "gzip",
+        "X-Subscription-Token": apiKey,
+      },
+    });
 
-  if (!res.ok) {
-    console.error(`Brave Search error for "${query}": HTTP ${res.status}`);
+    if (!res.ok) {
+      console.error(`Brave Search error for "${query}": HTTP ${res.status}`);
+      return [];
+    }
+
+    const data = (await res.json()) as {
+      web?: { results?: { title: string; url: string }[] };
+    };
+    return data.web?.results ?? [];
+  } catch (e) {
+    console.error(`Brave Search failed for "${query}": ${e}`);
     return [];
   }
-
-  const data = (await res.json()) as {
-    web?: { results?: { title: string; url: string }[] };
-  };
-  return data.web?.results ?? [];
 }
 
-function extractFeedUrl(url: string): string | null {
-  if (/\.(xml|atom|rss)$/i.test(url)) return url;
-  if (/\/(feed|rss|atom)(\/|$)/i.test(url)) return url;
-  if (/\/latest\.rss$/i.test(url)) return url;
-  return null;
+// ── Phase 1: Registry Resolution ──
+
+interface VerifiedFeed extends ResolvedFeed {
+  verified?: boolean;
+  error?: string;
 }
 
-function getHostname(url: string): string | null {
-  try {
-    return new URL(url).hostname;
-  } catch {
-    return null;
-  }
-}
+async function resolveRegistry(
+  doVerify: boolean
+): Promise<{ feeds: VerifiedFeed[]; failed: VerifiedFeed[] }> {
+  const resolved = resolveAllFeeds(PROTOCOLS);
+  const feeds: VerifiedFeed[] = resolved.map((f) => ({ ...f }));
 
-async function verifyAndExtractTitle(
-  url: string
-): Promise<{ ok: boolean; title: string | null }> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), VERIFY_TIMEOUT_MS);
-  try {
-    const res = await fetch(url, {
-      signal: controller.signal,
-      headers: { "User-Agent": "blockchain-signals-discovery/1.0" },
-      redirect: "follow",
-    });
-    if (!res.ok) return { ok: false, title: null };
-    const body = await res.text();
-    const isValid = /<rss[\s>]/.test(body) || /<feed[\s>]/.test(body);
-    if (!isValid) return { ok: false, title: null };
-
-    // Extract feed title
-    const titleMatch = body.match(/<title>([^<]+)<\/title>/);
-    return { ok: true, title: titleMatch ? titleMatch[1].trim() : null };
-  } catch {
-    return { ok: false, title: null };
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-async function main() {
-  const apiKey = process.env.BRAVE_SEARCH_API_KEY;
-  if (!apiKey) {
-    console.error("BRAVE_SEARCH_API_KEY is required");
-    process.exit(1);
+  if (!doVerify) {
+    return { feeds, failed: [] };
   }
 
-  const feeds = parseOpml();
-  const existingUrls = new Set(
-    feeds.map((f) => f.xmlUrl.toLowerCase().replace(/\/+$/, ""))
-  );
-  const seenDomains = new Set(
-    feeds.map((f) => getHostname(f.xmlUrl)).filter(Boolean) as string[]
-  );
+  console.error(`Verifying ${feeds.length} registry feeds...`);
+  const failed: VerifiedFeed[] = [];
 
-  // Collect candidate URLs, dedup by domain (keep first seen)
-  const candidateMap = new Map<string, Candidate>();
+  // Verify in batches
+  for (let i = 0; i < feeds.length; i += CONCURRENCY) {
+    const batch = feeds.slice(i, i + CONCURRENCY);
+    await Promise.all(
+      batch.map(async (feed) => {
+        const result = await verifyFeed(feed.xmlUrl);
+        feed.verified = result.ok;
+        if (!result.ok) {
+          feed.error = result.error;
+          failed.push(feed);
+        }
+      })
+    );
+  }
 
-  for (const query of SEARCH_QUERIES) {
+  return { feeds, failed };
+}
+
+// ── Phase 2: Brave Search補完 ──
+
+interface BraveCandidate {
+  protocol: string;
+  sourceType: SourceType;
+  url: string;
+  feedTitle: string | null;
+  query: string;
+}
+
+async function braveSearchComplement(
+  apiKey: string
+): Promise<BraveCandidate[]> {
+  const unresolved = findUnresolvedSources(PROTOCOLS);
+  const candidates: BraveCandidate[] = [];
+
+  // Protocol-specific queries for unresolved sources
+  for (const { protocol, source } of unresolved) {
+    const query = `"${protocol.name}" official ${source.type} RSS feed`;
     console.error(`Searching: "${query}"...`);
+
     const results = await braveSearch(query, apiKey);
 
     for (const r of results) {
-      const urls: string[] = [];
+      // Try to extract feed-like URLs
+      const feedPatterns = [
+        r.url,
+        r.url.replace(/\/?$/, "/feed"),
+        r.url.replace(/\/?$/, "/rss"),
+        r.url.replace(/\/?$/, "/feed.xml"),
+        r.url.replace(/\/?$/, "/rss.xml"),
+      ];
 
-      const feedUrl = extractFeedUrl(r.url);
-      if (feedUrl) urls.push(feedUrl);
-
-      // Try common feed paths
-      try {
-        const base = new URL(r.url).origin;
-        urls.push(
-          `${base}/feed`,
-          `${base}/rss`,
-          `${base}/feed.xml`,
-          `${base}/rss.xml`,
-          `${base}/atom.xml`
-        );
-      } catch {
-        // ignore
-      }
-
-      for (const url of urls) {
-        const hostname = getHostname(url);
-        if (!hostname) continue;
-        if (seenDomains.has(hostname)) continue;
-
-        const normalized = url.toLowerCase().replace(/\/+$/, "");
-        if (existingUrls.has(normalized)) continue;
-
-        // First candidate for this domain wins
-        seenDomains.add(hostname);
-        candidateMap.set(normalized, {
-          title: r.title,
-          url,
-          query,
-          feedTitle: null,
-        });
-        break; // one per domain per search result
+      for (const url of feedPatterns) {
+        const result = await verifyFeed(url, 8_000);
+        if (result.ok) {
+          candidates.push({
+            protocol: protocol.name,
+            sourceType: source.type,
+            url,
+            feedTitle: result.title,
+            query,
+          });
+          break; // one per search result
+        }
       }
     }
 
     await new Promise((r) => setTimeout(r, 1000));
   }
 
-  const candidates = [...candidateMap.values()];
-  console.error(`Verifying ${candidates.length} candidate URLs...`);
+  // New protocol discovery
+  const discoveryQueries = [
+    "new blockchain protocol launch 2026 blog RSS",
+    "new DeFi protocol blog RSS feed",
+  ];
 
-  // Verify in batches of 5, extract feed title
-  const confirmed: Candidate[] = [];
-  for (let i = 0; i < candidates.length; i += 5) {
-    const batch = candidates.slice(i, i + 5);
-    await Promise.all(
-      batch.map(async (c) => {
-        const result = await verifyAndExtractTitle(c.url);
-        if (result.ok) {
-          c.feedTitle = result.title;
-          confirmed.push(c);
-        }
-      })
-    );
+  for (const query of discoveryQueries) {
+    console.error(`Searching: "${query}"...`);
+    const results = await braveSearch(query, apiKey);
+
+    for (const r of results) {
+      const result = await verifyFeed(r.url, 8_000);
+      if (result.ok) {
+        candidates.push({
+          protocol: "Unknown",
+          sourceType: "blog",
+          url: r.url,
+          feedTitle: result.title,
+          query,
+        });
+      }
+    }
+
+    await new Promise((r) => setTimeout(r, 1000));
   }
 
-  // Output report
+  return candidates;
+}
+
+// ── Diff with existing OPML ──
+
+interface DiffResult {
+  added: ResolvedFeed[];
+  removed: { name: string; xmlUrl: string }[];
+  unchanged: number;
+}
+
+function diffWithExisting(newFeeds: ResolvedFeed[]): DiffResult {
+  let existingFeeds: { name: string; xmlUrl: string }[];
+  try {
+    existingFeeds = parseOpml().map((f) => ({
+      name: f.name,
+      xmlUrl: f.xmlUrl,
+    }));
+  } catch {
+    return { added: newFeeds, removed: [], unchanged: 0 };
+  }
+
+  const existingUrls = new Set(
+    existingFeeds.map((f) => f.xmlUrl.toLowerCase().replace(/\/+$/, ""))
+  );
+  const newUrls = new Set(
+    newFeeds.map((f) => f.xmlUrl.toLowerCase().replace(/\/+$/, ""))
+  );
+
+  const added = newFeeds.filter(
+    (f) => !existingUrls.has(f.xmlUrl.toLowerCase().replace(/\/+$/, ""))
+  );
+  const removed = existingFeeds.filter(
+    (f) => !newUrls.has(f.xmlUrl.toLowerCase().replace(/\/+$/, ""))
+  );
+  const unchanged = newFeeds.length - added.length;
+
+  return { added, removed, unchanged };
+}
+
+// ── Report ──
+
+function formatReport(
+  feeds: VerifiedFeed[],
+  failed: VerifiedFeed[],
+  diff: DiffResult,
+  braveCandidates: BraveCandidate[],
+  doVerify: boolean
+): string {
   const lines: string[] = [];
   lines.push("# Feed Discovery Report");
   lines.push("");
   lines.push(`**Date**: ${new Date().toISOString().split("T")[0]}`);
-  lines.push(`**Verified feeds**: ${confirmed.length}`);
+  lines.push(`**Registry feeds**: ${feeds.length}`);
   lines.push("");
 
-  if (confirmed.length > 0) {
-    lines.push("| # | Feed | URL | Found via |");
-    lines.push("|---|------|-----|-----------|");
-    confirmed.forEach((c, i) => {
-      const name = c.feedTitle ?? c.title;
-      lines.push(`| ${i + 1} | ${name} | ${c.url} | ${c.query} |`);
+  // Diff summary
+  lines.push("## Registry vs Current OPML");
+  lines.push("");
+  lines.push(`- Unchanged: ${diff.unchanged}`);
+  lines.push(`- New (to be added): ${diff.added.length}`);
+  lines.push(`- Removed (no longer in registry): ${diff.removed.length}`);
+  lines.push("");
+
+  if (diff.added.length > 0) {
+    lines.push("### New Feeds");
+    lines.push("");
+    lines.push("| # | Feed | URL |");
+    lines.push("|---|------|-----|");
+    diff.added.forEach((f, i) => {
+      lines.push(`| ${i + 1} | ${f.label} | ${f.xmlUrl} |`);
     });
-  } else {
-    lines.push("No new feeds found this week.");
+    lines.push("");
   }
 
-  lines.push("");
-  console.log(lines.join("\n"));
+  if (diff.removed.length > 0) {
+    lines.push("### Removed Feeds");
+    lines.push("");
+    lines.push("| # | Feed | URL |");
+    lines.push("|---|------|-----|");
+    diff.removed.forEach((f, i) => {
+      lines.push(`| ${i + 1} | ${f.name} | ${f.xmlUrl} |`);
+    });
+    lines.push("");
+  }
+
+  // Verification failures
+  if (doVerify && failed.length > 0) {
+    lines.push("## Verification Failures");
+    lines.push("");
+    lines.push("| Feed | URL | Error |");
+    lines.push("|------|-----|-------|");
+    for (const f of failed) {
+      lines.push(`| ${f.label} | ${f.xmlUrl} | ${f.error ?? "unknown"} |`);
+    }
+    lines.push("");
+  }
+
+  // Brave Search candidates
+  if (braveCandidates.length > 0) {
+    lines.push("## Brave Search Candidates (manual review)");
+    lines.push("");
+    lines.push("| # | Protocol | Type | URL | Title | Found via |");
+    lines.push("|---|----------|------|-----|-------|-----------|");
+    braveCandidates.forEach((c, i) => {
+      lines.push(
+        `| ${i + 1} | ${c.protocol} | ${c.sourceType} | ${c.url} | ${c.feedTitle ?? "-"} | ${c.query} |`
+      );
+    });
+    lines.push("");
+  }
+
+  return lines.join("\n");
+}
+
+// ── Main ──
+
+async function main() {
+  const args = new Set(process.argv.slice(2));
+  const doVerify = args.has("--verify");
+  const doWrite = args.has("--write");
+
+  // Phase 1: Registry resolution
+  const { feeds, failed } = await resolveRegistry(doVerify);
+  console.error(
+    `Registry: ${feeds.length} feeds resolved${doVerify ? `, ${failed.length} failed verification` : ""}`
+  );
+
+  // Diff with existing OPML
+  const resolvedFeeds = resolveAllFeeds(PROTOCOLS);
+  const diff = diffWithExisting(resolvedFeeds);
+
+  // Phase 2: Brave Search (optional)
+  let braveCandidates: BraveCandidate[] = [];
+  const apiKey = process.env.BRAVE_SEARCH_API_KEY;
+  if (apiKey) {
+    braveCandidates = await braveSearchComplement(apiKey);
+    console.error(
+      `Brave Search: ${braveCandidates.length} candidates found`
+    );
+  } else {
+    console.error(
+      "BRAVE_SEARCH_API_KEY not set, skipping Brave Search complement"
+    );
+  }
+
+  // Report
+  const report = formatReport(feeds, failed, diff, braveCandidates, doVerify);
+  console.log(report);
+
+  // Write OPML (registry-confirmed feeds only, not Brave candidates)
+  if (doWrite) {
+    // If --verify was used, exclude feeds that failed verification
+    const failedUrls = new Set(failed.map((f) => f.xmlUrl));
+    const writeFeeds = doVerify
+      ? resolvedFeeds.filter((f) => !failedUrls.has(f.xmlUrl))
+      : resolvedFeeds;
+    const opml = generateOpml(writeFeeds);
+    const outPath = resolve(process.cwd(), "feeds.opml");
+    writeFileSync(outPath, opml);
+    console.error(`Written: ${outPath} (${writeFeeds.length} feeds)`);
+  }
 }
 
 main();

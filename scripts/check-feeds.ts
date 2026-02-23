@@ -1,5 +1,10 @@
 import { writeFileSync } from "node:fs";
 import { parseOpml, type Feed } from "./parse-opml.js";
+import {
+  fetchWithTimeout,
+  isRssOrAtom,
+  extractLastPostDate,
+} from "./feed-utils.js";
 
 const TIMEOUT_MS = 15_000;
 const CONCURRENCY = 5;
@@ -13,45 +18,6 @@ interface FeedResult {
   httpStatus?: number;
   lastPost?: string;
   error?: string;
-}
-
-async function fetchWithTimeout(
-  url: string,
-  timeoutMs: number
-): Promise<Response> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, {
-      signal: controller.signal,
-      headers: { "User-Agent": "blockchain-signals-health-check/1.0" },
-      redirect: "follow",
-    });
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-function extractLastPostDate(body: string): Date | null {
-  // RSS <pubDate>
-  const pubDateMatch = body.match(/<pubDate>([^<]+)<\/pubDate>/);
-  if (pubDateMatch) {
-    const d = new Date(pubDateMatch[1]);
-    if (!isNaN(d.getTime())) return d;
-  }
-
-  // Atom <updated>
-  const updatedMatch = body.match(/<updated>([^<]+)<\/updated>/);
-  if (updatedMatch) {
-    const d = new Date(updatedMatch[1]);
-    if (!isNaN(d.getTime())) return d;
-  }
-
-  return null;
-}
-
-function isRssOrAtom(body: string): boolean {
-  return /<rss[\s>]/.test(body) || /<feed[\s>]/.test(body);
 }
 
 async function checkFeed(feed: Feed, attempt = 0): Promise<FeedResult> {

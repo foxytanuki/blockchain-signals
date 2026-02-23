@@ -6,7 +6,9 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   discover:
@@ -18,12 +20,12 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      - name: Run feed discovery
-        run: bun run discover-feeds > /tmp/report.md
+      - name: Run feed discovery (verify + write)
+        run: bun run discover-feeds -- --verify --write > /tmp/report.md
         env:
           BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
 
-      - name: Create issue
+      - name: Create issue with report
         uses: actions/github-script@v7
         with:
           script: |
@@ -36,3 +38,41 @@ jobs:
               body,
               labels: ['feed-discovery']
             });
+
+      - name: Create PR if OPML changed
+        run: |
+          if git diff --quiet feeds.opml; then
+            echo "No changes to feeds.opml"
+            exit 0
+          fi
+
+          DATE=$(date +%Y-%m-%d)
+          BRANCH="chore/update-feeds-${DATE}"
+          git branch -D "$BRANCH" 2>/dev/null || true
+          git push origin --delete "$BRANCH" 2>/dev/null || true
+          git checkout -b "$BRANCH"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add feeds.opml
+          git commit -m "chore: update feeds.opml from protocol registry"
+          git push origin "$BRANCH"
+
+          ADDED=$(git diff HEAD~1 --stat feeds.opml | tail -1)
+          gh pr create \
+            --title "Update feeds.opml - ${DATE}" \
+            --body "$(cat <<EOF
+          ## Registry-based feed update
+
+          Updated \`feeds.opml\` from protocol registry.
+
+          \`\`\`
+          ${ADDED}
+          \`\`\`
+
+          See the latest [Feed Discovery issue](../../issues?q=label%3Afeed-discovery+sort%3Acreated-desc) for the full report.
+          EOF
+          )" \
+            --label "feed-discovery"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

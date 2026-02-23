@@ -1,46 +1,62 @@
 # blockchain-signals
 
-A curated list of blockchain-related RSS feeds and newsletters.
+A curated registry of blockchain protocol RSS feeds.
 
-## RSS Feeds
+## Protocol Registry
 
-`feeds.opml` contains ~50 RSS/Atom feeds across these categories:
+`scripts/protocols.ts` is the source of truth. It defines ~30 protocols with typed feed sources:
 
-- **Infrastructure** - Blocknative, Chainlink, ChainSafe, OpenZeppelin, etc.
-- **Layer1** - Algorand, Sui, Neo, Celo
-- **Layer2** - Offchain Labs (Arbitrum)
-- **Privacy** - Brave, Electric Coin Company
-- **Research** - Ethereum Blog, Sigma Prime, SlowMist, Coin Center
-- **DeFi** - Synthetix, Rocket Pool, THORChain, etc.
-- **Forum** - Ethereum Research, Flashbots, Anoma
-- **GitHub Releases** - go-ethereum
+- **Blog** - Official protocol blogs
+- **Releases** - GitHub release feeds (auto-generated from `org/repo`)
+- **Forum** - Development/research forums (Discourse)
+- **Governance** - Governance forums and proposals
+- **Security** - Security research and audits
+- **Research** - Academic/technical research
 
-Import `feeds.opml` into any RSS reader (Inoreader, Feedly, etc.).
+`feeds.opml` is generated from the registry and can be imported into any RSS reader (Inoreader, Feedly, etc.).
+
+## Scripts
+
+### Feed Discovery
+
+Resolves feeds from the protocol registry, diffs against current OPML, and optionally uses Brave Search to find feeds for protocols with missing URLs.
+
+```bash
+bun run discover-feeds                    # registry resolution + diff report
+bun run discover-feeds -- --verify        # + verify each feed URL is alive
+bun run discover-feeds -- --verify --write # + write feeds.opml
+```
+
+### Generate OPML
+
+Shortcut to regenerate `feeds.opml` from the registry:
+
+```bash
+bun run generate-opml
+```
+
+### Feed Health Check
+
+Checks all feeds in `feeds.opml` for availability and staleness:
+
+```bash
+bun run check-feeds
+```
+
+### Probe Feeds
+
+Auto-detect RSS feeds from a protocol's homepage:
+
+```bash
+bun run probe-feeds -- https://ethereum.org https://uniswap.org
+```
 
 ## Automated Monitoring
 
 Two GitHub Actions workflows run weekly (Monday 09:00 UTC):
 
-### Feed Health Check
-
-Checks all feeds for availability and staleness.
-
-- **Dead**: HTTP error, timeout, or DNS failure
-- **Invalid**: Responds 200 but not RSS/Atom content
-- **Stale**: Last post older than 6 months
-- **Healthy**: Active and valid
-
-```
-bun run check-feeds
-```
-
-### Feed Discovery
-
-Searches for new blockchain RSS feeds using Brave Search API, verifies they serve valid RSS/Atom content, and deduplicates against existing feeds.
-
-```
-BRAVE_SEARCH_API_KEY=xxx bun run discover-feeds
-```
+- **Feed Health Check** - Checks feed availability, auto-removes dead feeds via PR
+- **Feed Discovery** - Resolves registry, verifies feeds, updates OPML via PR
 
 Results are posted as GitHub Issues with labels `feed-health` and `feed-discovery`.
 
@@ -77,11 +93,11 @@ Results are posted as GitHub Issues with labels `feed-health` and `feed-discover
 
 ```bash
 bun install
-cp .env.example .env  # Set BRAVE_SEARCH_API_KEY for feed discovery
+cp .env.example .env  # Set BRAVE_SEARCH_API_KEY for Brave Search complement
 ```
 
 ## Secrets
 
 | Variable | Where | Purpose |
 |---|---|---|
-| `BRAVE_SEARCH_API_KEY` | GitHub Secrets | Feed discovery |
+| `BRAVE_SEARCH_API_KEY` | GitHub Secrets | Brave Search complement in feed discovery |
