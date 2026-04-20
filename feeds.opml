@@ -53,7 +53,6 @@
       <outline text="Solana - solana Releases" title="Solana - solana Releases" type="rss" xmlUrl="https://github.com/solana-labs/solana/releases.atom" htmlUrl="https://github.com/solana-labs/solana/releases"/>
       <outline text="StarkNet - cairo Releases" title="StarkNet - cairo Releases" type="rss" xmlUrl="https://github.com/starkware-libs/cairo/releases.atom" htmlUrl="https://github.com/starkware-libs/cairo/releases"/>
       <outline text="Sui - sui Releases" title="Sui - sui Releases" type="rss" xmlUrl="https://github.com/MystenLabs/sui/releases.atom" htmlUrl="https://github.com/MystenLabs/sui/releases"/>
-      <outline text="Synthetix - synthetix Releases" title="Synthetix - synthetix Releases" type="rss" xmlUrl="https://github.com/Synthetixio/synthetix/releases.atom" htmlUrl="https://github.com/Synthetixio/synthetix/releases"/>
       <outline text="The Graph - graph-node Releases" title="The Graph - graph-node Releases" type="rss" xmlUrl="https://github.com/graphprotocol/graph-node/releases.atom" htmlUrl="https://github.com/graphprotocol/graph-node/releases"/>
       <outline text="Uniswap - v4-core Releases" title="Uniswap - v4-core Releases" type="rss" xmlUrl="https://github.com/Uniswap/v4-core/releases.atom" htmlUrl="https://github.com/Uniswap/v4-core/releases"/>
       <outline text="Zcash - zcash Releases" title="Zcash - zcash Releases" type="rss" xmlUrl="https://github.com/zcash/zcash/releases.atom" htmlUrl="https://github.com/zcash/zcash/releases"/>
